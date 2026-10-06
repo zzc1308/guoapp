@@ -52,7 +52,7 @@ func TestNativeHLSReadsNestedPlaylistKeyAndRanges(t *testing.T) {
 			io.WriteString(w, "#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=200000\nvideo/media.m3u8\n")
 		case "/video/media.m3u8":
 			w.Header().Set("Content-Type", "application/vnd.apple.mpegurl")
-			io.WriteString(w, "#EXTM3U\n#EXT-X-TARGETDURATION:3\n#EXT-X-KEY:METHOD=AES-128,URI=\"secret.key\",IV=0x00000000000000000000000000000001\n#EXT-X-MAP:URI=\"init.mp4\"\n#EXTINF:3.0,\nsegment.ts\n#EXT-X-ENDLIST\n")
+			io.WriteString(w, "#EXTM3U\n#EXT-X-TARGETDURATION:3\n#EXT-X-KEY:METHOD=AES-128,URI=\"secret.key\",IV=0x00000000000000000000000000000001\n#EXT-X-MAP:URI=\"init.mp4\"\n#EXTINF:3.0,\nsegment.ts?playlist=media.m3u8\n#EXT-X-ENDLIST\n")
 		case "/video/secret.key":
 			t.Error("the source key should be replaced by the resolved key")
 			w.WriteHeader(http.StatusForbidden)
@@ -114,6 +114,9 @@ func TestNativeHLSReadsNestedPlaylistKeyAndRanges(t *testing.T) {
 	}
 	if key := read(matches[0][1]); key != "0123456789abcdef" {
 		t.Fatal("wrong key")
+	}
+	if init := read(matches[1][1]); init != "init" {
+		t.Fatal("initialization segment was not preserved")
 	}
 	segment := ""
 	for _, line := range strings.Split(media, "\n") {
