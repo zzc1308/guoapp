@@ -76,7 +76,7 @@ Flutter 多端独立短剧 / 影视应用，原名「短剧库 APP」。站源�
 
 ### GitHub Actions
 
-独立 Windows 打包：手动运行 **Build Windows packages**（`.github/workflows/windows.yml`），使用 Windows 2022、Flutter 3.47.4 和 MinGW 构建红果版与全站源版，并上传完整 ZIP 与 SHA256 到 Actions Artifacts。下载后完整解压，再运行 `hongguojian.exe` 或 `zhenguojian.exe`，保留同目录 DLL 与 `data`。此流程尚未实际执行验证，当前仅为开发快照；成功出包也不代表已通过 Windows 设备播放验收。
+独立 Windows 打包：手动运行 **Build Windows packages**（`.github/workflows/windows.yml`），使用 Windows 2022、Flutter 3.47.4 和 MinGW 构建红果版与全站源版，并上传完整 ZIP 与 SHA256 到 Actions Artifacts。下载后完整解压，再运行 `hongguojian.exe` 或 `zhenguojian.exe`，保留同目录 DLL 与 `data`。2026-10-06 已在 Windows 2022 构建机完成两版 Release 编译、完整包检查与产物上传（[构建记录](https://github.com/zzc1308/guoapp/actions/runs/37407166751)）；补齐了原锁文件缺失的视频播放器依赖。仍未完成 Windows 设备启动与播放验收，按开发快照交付。
 
 推送 `main` / `master`、`v*` 标签、提交 PR，或手动运行 **Build app packages**，会先检查再构建两版（默认与 `--all-sources`）：
 
